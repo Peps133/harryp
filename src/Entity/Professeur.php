@@ -19,4 +19,39 @@ class Professeur
     {
         return $this->id;
     }
+
+    private $eleves;
+
+    public function __construct()
+    {
+        $this->eleves = new ArrayCollection();
+    }
+
+
+    /**
+     * @return Collection|Eleve[]
+     */
+    public function getEleves(): Collection
+    {
+        return $this->eleves;
+    }
+
+    public function addEleve(Eleve $eleve): self
+    {
+        if (!$this->eleves->contains($eleve)) {
+            $this->eleves[] = $eleve;
+            $eleve->addProfesseur($this);
+        }
+
+        return $this;
+    }
+
+    public function removeEleve(Eleve $eleve): self
+    {
+        if ($this->eleves->removeElement($eleve)) {
+            $eleve->removeProfesseur($this);
+        }
+
+        return $this;
+    }
 }

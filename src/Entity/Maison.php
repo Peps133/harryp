@@ -5,6 +5,8 @@ namespace App\Entity;
 use App\Repository\MaisonRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\UX\Turbo\Attribute\Broadcast;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 
 #[ORM\Entity(repositoryClass: MaisonRepository::class)]
 #[Broadcast]
@@ -16,6 +18,20 @@ class Maison
     private ?int $id = null;
 
     private $eleve;
+
+    public function __construct()
+    {
+        $this->eleves = new ArrayCollection();
+    }
+
+
+    /**
+     * @return Collection|Eleve[]
+     */
+    public function getEleves(): Collection
+    {
+        return $this->eleves;
+    }
 
     public function addEleve(Eleve $eleve): self
     {

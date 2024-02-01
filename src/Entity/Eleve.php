@@ -56,4 +56,52 @@ class Eleve
     {
         return $this->id;
     }
+
+
+    private $maison;
+
+
+    public function getMaison(): ?Maison
+    {
+        return $this->maison;
+    }
+
+    public function setMaison(?Maison $maison): self
+    {
+        $this->maison = $maison;
+
+        return $this;
+    }
+
+
+    private $professeurs;
+
+    /**
+     * @return Collection|Professeur[]
+     */
+    public function getProfesseurs(): Collection
+    {
+        return $this->professeurs;
+    }
+
+    public function addProfesseur(Professeur $professeur): self
+    {
+        if (!$this->professeurs->contains($professeur)) {
+            $this->professeurs[] = $professeur;
+            $professeur->addEleve($this);
+        }
+
+        return $this;
+    }
+
+    public function removeProfesseur(Professeur $professeur): self
+    {
+        if ($this->professeurs->removeElement($professeur)) {
+            $professeur->removeEleve($this);
+        }
+
+        return $this;
+    }
+
+
 }
